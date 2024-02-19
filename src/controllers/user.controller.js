@@ -69,9 +69,17 @@ if(ROLES_ADMITIDOS.includes(user.role)){
 
 return res.status(400).json({message:"Role cannot be modified",usuario:user});
 }
+export const saveUserDocuments = async (req, res) => {
+  const { id } = req.params;
+  const { profiles,products,documents} = req.files;
+  const response = await userService.saveUserDocuments({ id, profiles, products, documents });
+  res.json({ response });
+};
+
 export const userController = {
   "getUser": getUser,
   "create":create,
   "sendmail":sendmail,
-  "premium":premium
+  "premium":premium,
+  "saveUserDocuments":saveUserDocuments
 };

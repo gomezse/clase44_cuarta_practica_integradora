@@ -41,6 +41,25 @@ class UserService {
       return user;    
   }
 
+  async saveUserDocuments({ id, profiles, products, documents }) {
+    const savedDocuments = await usersManager.updateOne(id, {
+      documents: [
+        {
+          name: "profiles",
+          reference: profiles[0].path,
+        },
+        {
+          name: "products",
+          reference: products[0].path,
+        },
+        {
+          name: "documents",
+          reference: documents[0].path,
+        },
+      ],
+    });
+    return savedDocuments;
+  };
 
 }
 

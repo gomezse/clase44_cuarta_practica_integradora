@@ -1,6 +1,6 @@
 import { productsManager } from "../dao/models/mongoose/ProductsManager.js"
 import { cartsManager } from "../dao/models/mongoose/CartsManager.js";
-
+import { usersManager } from "../dao/models/mongoose/UsersManager.js";
 import config from "../utils/config.js";
 import jwt from "jsonwebtoken";
 import {logger} from "../utils/logger.js"
@@ -150,6 +150,16 @@ const deleteProduct= async (req, res) => {
 } 
 
 
+const documents = async (req, res) => {
+    
+    if (!req.cookies.token) {         
+        return res.redirect("/login");
+    }
+    const user = jwt.verify(req.cookies.token, config.secretKeyJWT); 
+    const userCompleto = await usersManager.findByEmail(user.email);
+    
+    res.render("documents", {id:userCompleto._id});
+}
 export const viewRouter = {
     "chat":chat,
     "products":products,
@@ -165,4 +175,5 @@ export const viewRouter = {
     "addProduct":addProduct,
     "updateProduct":updateProduct,
     "deleteProduct":deleteProduct,
+    "documents":documents
 }

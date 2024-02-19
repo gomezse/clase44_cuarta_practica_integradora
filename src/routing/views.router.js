@@ -20,6 +20,6 @@ router.get("/loggerTest",viewRouter.loggerTest);
 router.get("/add-product",viewRouter.addProduct);
 router.get("/product/:pid",viewRouter.updateProduct);
 router.get("/delete-product/:pid",authMiddleware("ADMIN,PREMIUM"),viewRouter.deleteProduct);
-
+router.get("/documents",viewRouter.documents);
 
 export default router;

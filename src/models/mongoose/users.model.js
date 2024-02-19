@@ -45,6 +45,15 @@ const usersSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'ResetToken',
   },
+  documents: {
+    type: [
+      {
+        name: String,
+        reference: String,
+      },
+    ],
+    default: [],
+  }
 });
 
 usersSchema.pre("find", function () {

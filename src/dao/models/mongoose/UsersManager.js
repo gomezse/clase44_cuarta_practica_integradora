@@ -20,6 +20,11 @@ class UsersManager {
     const response = await usersModel.deleteOne(id);
     return response;
   }
+
+  async updateOne(id,obj){
+    const response = await usersModel.findByIdAndUpdate(id,obj);
+    return response;
+  }
 }
 
 export const usersManager = new UsersManager();
