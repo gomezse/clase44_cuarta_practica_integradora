@@ -37,7 +37,7 @@ const sendmail= async(req,res)=>{
   user.save();
 
 
-  const resetUrl = `http://localhost:8084/restaurar`;
+  const resetUrl = `http://localhost:8080/restaurar`;
   const mailOptions = {
     from: config.mail_reestablecer,
     // to: email,

@@ -8,7 +8,7 @@ import { ErrorsMessages,ErrorsName } from '../errors/error.enum.js';
 import { cartsManager } from "../dao/models/mongoose/CartsManager.js";
 import config from "../utils/config.js";
 import { ResetToken } from "../models/mongoose/resetToken.model.js";
-
+import jwt from "jsonwebtoken";
 
 const signup = async (req, res) => {
   const { first_name, last_name, email, password ,role} = req.body;
@@ -33,7 +33,7 @@ const signup = async (req, res) => {
 
 const login = async (req, res) => {
   const { email, password } = req.body;
-  console.log('REQ BODY',req.body);
+  // console.log('REQ BODY',req.body);
   if (!email || !password) {
     return res.status(400).json({ message: "Todos los campos son requeridos" });
   }
@@ -50,11 +50,15 @@ const login = async (req, res) => {
     //jwt
     const { first_name, last_name, role ,cart} = user;
     const token = generateToken({ first_name, last_name, email, role ,cart});
-    // res
-    //   .status(200)
-    //   .cookie("token", token, { maxAge: 3600000 })
-    //   .json({ message: "Bienvenido a la pagina: ", token });
-      res.cookie("token", token, { maxAge: 3600000 }).send({ status:"success",message: "Bienvenido a la pagina: "});
+    
+    const opciones = { timeZone: 'America/Argentina/Buenos_Aires', hour12: true, weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' };
+    const dateActual = new Date().toLocaleString('es-AR', opciones);
+
+
+    user.last_connection = dateActual;
+    await user.save()
+    
+    res.cookie("token", token, { maxAge: 3600000 }).send({ status:"success",message: "Bienvenido a la pagina: "});
   } catch (error) {
     res.status(500).json({ error });
   }
@@ -72,11 +76,19 @@ const callbackGoogle= passport.authenticate("google", {
   failureRedirect: "/error" 
 });
 
-const signout = (req, res) => {
+const signout = async (req, res) => {
 
   // req.session.destroy(() => {
   //   res.redirect("/login");
   // });
+  const userToken = jwt.verify(req.cookies.token, config.secretKeyJWT);
+  const user = await usersManager.findByEmail(userToken.email);
+  const opciones = { timeZone: 'America/Argentina/Buenos_Aires', hour12: true, weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' };
+  const dateActual = new Date().toLocaleString('es-AR', opciones);
+
+  user.last_connection = dateActual;
+  await user.save()
+
 //con cookies
   res.clearCookie('token'); 
   res.redirect("/login");

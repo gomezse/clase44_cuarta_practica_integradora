@@ -53,6 +53,10 @@ const usersSchema = new mongoose.Schema({
       },
     ],
     default: [],
+  },
+  last_connection:{
+    type:String,
+    default: new Date().toLocaleDateString(),
   }
 });
 

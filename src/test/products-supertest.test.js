@@ -4,7 +4,7 @@ import mongoose from "mongoose";
 import "./db.js";
 import { productsManager } from "../dao/models/mongoose/ProductsManager.js";
 
-const requester = supertest("http://localhost:8084");
+const requester = supertest("http://localhost:8080");
 
 describe("Products API", () => {
   //Registro dos usuarios con 2 roles distintos Admin y User para utilizar en los test posteriores.
