@@ -1,5 +1,5 @@
 # Clase 44: Cuarta práctica integradora.
->![IMPORTANT]
+>[!IMPORTANT]
 >Ejecutar "npm i"
 >Ejecutar "npm start" para correr la aplicación.
 
