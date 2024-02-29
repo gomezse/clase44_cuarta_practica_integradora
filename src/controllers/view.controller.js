@@ -59,9 +59,10 @@ const profile = async (req, res) => {
   
     const { payload } = products;
     
-    
+    const userDB = await usersManager.findByEmail(user.email);
+    const id = userDB._id;
     const productsObject = payload.map(product => product.toObject());
-    res.render("profile", { products: productsObject, user: req.user?req.user:user });
+    res.render("profile", { products: productsObject, user: req.user?req.user:user,id:id });
 }
 
 const restaurar =  (req, res) => {

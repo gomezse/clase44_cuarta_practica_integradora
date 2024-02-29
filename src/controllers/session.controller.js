@@ -24,12 +24,20 @@ const signup = async (req, res) => {
       role:role?role:config.rolUser,
       cart:cart._id
     });
+
     
-    res.status(200).json({ message: "Usuario creado", user: createdUser });
+    // res.status(200).json({ message: "Usuario creado", user: createdUser });
+    res.status(200).redirect("/login");
   } catch (error) {
     CustomError.generateErrorMessage(ErrorsMessages.ERROR_INTERNAL,500,ErrorsName.ERROR_INTERNAL);      
   }
 }
+
+
+
+
+
+
 
 const login = async (req, res) => {
   const { email, password } = req.body;
@@ -58,7 +66,8 @@ const login = async (req, res) => {
     user.last_connection = dateActual;
     await user.save()
     
-    res.cookie("token", token, { maxAge: 3600000 }).send({ status:"success",message: "Bienvenido a la pagina: "});
+    res.cookie("token", token, { maxAge: 3600000 })
+    .redirect("/profile");
   } catch (error) {
     res.status(500).json({ error });
   }

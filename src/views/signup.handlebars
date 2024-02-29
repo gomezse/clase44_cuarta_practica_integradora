@@ -7,8 +7,14 @@
     <br>
     Password: <input type="password" name="password" id="password">
     <br>
+    Rol: <select name="role" id="role">
+        <option value="ADMIN">Administrador</option>
+        <option value="USER">Usuario</option>
+        <option value="PREMIUM">Premium</option>
+    </select>
+    <br><br><br>
     <input type="submit" value="Ingresar">
 </form>
 
-<button onclick="location.href='/api/sessions/auth/github'">GITHUB</button>
-<button onclick="location.href='/api/sessions/auth/google'">GOOGLE</button>
+{{!-- <button onclick="location.href='/api/sessions/auth/github'">GITHUB</button> --}}
+{{!-- <button onclick="location.href='/api/sessions/auth/google'">GOOGLE</button> --}}

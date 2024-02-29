@@ -3,12 +3,15 @@
 <h4>Tu email es: {{user.email}} </h4>
 <input type="hidden" name="" id="email_user" value="{{user.email}}">
 
+
+<a href="http://localhost:8080/documents">Ir a la carga de documentos</a> <br>
+<a href='http://localhost:8080/api/users/premium/{{id}}'>Cambiar rol entre PREMIUM y USER</a> <br>
 {{!-- <a href="http://localhost:8080/api/users/sendmail">Reestablecer Contraseña</a> <br> --}}
 {{!-- <a id="sendMailButton" href="#">Reestablecer Contraseña</a> <br> --}}
 
-<a href="http://localhost:8080/api/carts/{{user.cart}}">Ver Carrito</a> <br>
+{{!-- <a href="http://localhost:8080/api/carts/{{user.cart}}">Ver Carrito</a> <br> --}}
 
-<button id="crearTicket" onclick="createTicket(`{{user.cart}}`)">Crear Ticket</button>
+{{!-- <button id="crearTicket" onclick="createTicket(`{{user.cart}}`)">Crear Ticket</button> --}}
 
 {{!-- {{#if user.isAdmin}}
     <h3>Rol:Admin</h3>
@@ -17,7 +20,7 @@
 {{/if}} --}}
 
 
-<h4>-------------------Productos------------------------</h4>
+{{!-- <h4>-------------------Productos------------------------</h4>
 {{#each products}}
         <p>TÍtulo:{{title}}</p>
         <p>Descripción:{{description}}</p>
@@ -32,7 +35,9 @@
       
     {{else}}
         <p>No hay productos disponibles.</p>
-{{/each}}
+{{/each}} --}}
+<br>
+<br>
 <input type="hidden" name="cid" id="cid" value="{{user.cart}}">
 <button><a href="/api/sessions/signout">Salir</a></button>
 

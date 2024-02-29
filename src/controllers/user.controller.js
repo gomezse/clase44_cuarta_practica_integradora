@@ -59,7 +59,20 @@ const ROLES_ADMITIDOS =["PREMIUM","USER"];
 if(!user){
   return res.status(400).json({message:"User not found"});
 }
-
+//si role user no tiene documentos cargados no deja hacer el pase.
+if( user.role === 'USER'){
+  const control = ["profiles", "products", "documents"];
+  const nombresEncontrados = user.documents.map(doc => doc.name);
+  if(!nombresEncontrados){
+    return res.status(404).send('No posee documentos cargados.');
+  }
+  for (const nombre of control) {
+    if (!nombresEncontrados.includes(nombre)) {
+      // throw new Error(`Falta cargar el documento con nombre  "${nombre}".`);
+      return res.status(404).send(`Falta cargar el documento con nombre  "${nombre}".`);
+    }
+  }
+}
 
 if(ROLES_ADMITIDOS.includes(user.role)){
   user.role = ROLES_ADMITIDOS.filter(rol => rol !== user.role)[0];
